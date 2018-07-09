@@ -52,9 +52,9 @@ class NavLinks extends Component {
 
 	render() {
 		console.log(this.state)
-    	let {userId, ally, admin, username} = this.props.state
+    	let {userId, ally, admin, firstName} = this.props.state
 			let login = userId ? <li><Link onClick={this.logOut} to='/logout'>Log Out</Link></li> : <li><Link to='/login'>Log In</Link></li>
-	    let profile = userId ? <li><Link to='/profile'>{username}s Profile</Link></li> : ''
+	    let profile = userId ? <li><Link to='/profile'>{firstName}'s Profile</Link></li> : ''
 	    let blogPost = ally ?  <li><Link to='/blog/add'>New Blog Post</Link></li> : ''
 	    let adminPage = admin ? <li><Link to='/'>Admin</Link></li> : ''
 	    let chatAccess = userId ? <li><Link to='/chat'>Live Chat</Link></li> : ''

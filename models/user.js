@@ -42,7 +42,7 @@ var userSchema = new mongoose.Schema({
     ref: 'Post'
   }],
   journals: [{
-    type: ObjectId,
+    type: Array,
     ref: 'Journal'
   }],
   chats: [{

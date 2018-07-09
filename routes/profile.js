@@ -11,18 +11,28 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/create', function(req, res, next) {
-	console.log('You hit the create a journal route!', req.body);
-	  User.findByIdAndUpdate(req.body.userId,
-	    {$push: {journals: req.body.journals}},
-	    {safe: true, upsert: true},
+	console.log('You hit the create a journal route!', req.body.journalContent);
+	var journal = {
+	             "title": req.body.title,
+	             "content": req.body.journalContent
+	           }
+	  User.findByIdAndUpdate(req.body.userId, {
+	  	$push : {
+	    		journals : journal  //inserted data is the object to be inserted 
+	  		}
+  		},
+  		{safe: true, upsert: true},
+
 	    function(err, doc) {
 	        if(err){
-	        console.log(err);
+	        	console.log(err);
 	        }else{
-	        //do stuff
+	        	console.log('current user info', doc.journals[0][0].title);
 	        }
 	    }
-);
+	).then(function(doc) {
+		res.redirect('/profile');
+	});
 });
 
 module.exports = router;

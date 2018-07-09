@@ -20,7 +20,7 @@ class Profile extends Component {
 	constructor(props){
 		super(props);
 		this.state={
-			userId: this.props.state.userId,
+			userId: '',
             title: '',
             journalContent: ''
         };
@@ -38,22 +38,25 @@ class Profile extends Component {
         e.preventDefault()
 		let {title, journalContent, userId} = this.state
 		axios.post('/profile/create', {
-			userId: userId,
-			journals: {
-				title: title,
-				content: journalContent
-			}
+			userId: this.props.state.userId,
+			title: this.state.title,
+			journalContent: this.state.journalContent
 		}).then(res => {
-			console.log(res)
+			this.setState({
+				title: '',
+				journalContent: ''
+			})
 		})
     }
 
     componentDidMount() {
-    	axios.get('/profile').then(() => {console.log('hitting the profile route', this.props.state.userId)})
+    	axios.get('/profile').then(() => {console.log('hitting the profile route', this.props.state)})
 
     }
 
 	render() {
+		var userJournals = this.props.state.journals
+		// var mappedJournals = map
 
 		return(
 			<div>
@@ -91,11 +94,11 @@ class Profile extends Component {
 
 						<div className="textarea-container col s12">
 							<label htmlFor='title'>Enter title: </label>
-							<input name='title' onChange={this.handleChange} type='text' defaultValue=''></input>
+							<input name='title' onChange={this.handleChange} type='text' value={this.state.title}></input>
 						</div>
 
 						<div className="textarea-container col s12 journal-container">
-							<textarea onChange={this.handleChange} name='journalContent'></textarea>
+							<textarea onChange={this.handleChange} name='journalContent' value={this.state.journalContent}></textarea>
 							<div className="textarea-size"></div>
 						</div>
 					</Col>
